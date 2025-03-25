@@ -1,0 +1,147 @@
+# Default values for hzero-org.hzero.gateway.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 1
+image:
+  repository: registry.choerodon.com.cn/hzero-hzero/hzero-gateway
+  pullPolicy: Always
+deployment:
+  managementPort: 8081
+env:
+  open:
+    # 项目级API是否必须检查项目参数
+    HZERO_GATEWAY_FILTER_COMMON_REQUEST_CHECK_PROJECT: false
+    # 组织级API是否必须检查组织参数
+    HZERO_GATEWAY_FILTER_COMMON_REQUEST_CHECK_ORGANIZATION: true
+    # 是否启用标准的权限检查
+    HZERO_GATEWAY_FILTER_COMMON_REQUEST_ENABLE: true
+    # 是否校验令牌篡改
+    HZERO_GATEWAY_FILTER_GET_USER_CHECK_TOKEN_TAMPER: false
+    # 收集SPAN信息开关
+    HZERO_GATEWAY_FILTER_COLLECT_SPAN_ENABLED: false
+    # 鉴权二级缓存开关
+    SPRING_CACHE_L1_ENABLED: false
+    # CORS允许源
+    HZERO_GATEWAY_CORS_ALLOWED_ORIGINS: '*'
+    # CORS允许头
+    HZERO_GATEWAY_CORS_ALLOWED_HEADERS: '*'
+    # CORS允许方法
+    HZERO_GATEWAY_CORS_ALLOWED_METHODS: '*'
+    # 是否打印 JWT
+    HZERO_GATEWAY_HELPER_ENABLE_JWT_LOG: false
+    # http请求监控
+    HZERO_REQUEST_COUNTER_ENABLE: true
+    # Eureka 注册中心地址
+    EUREKA_DEFAULT_ZONE: http://dev.hzero.com.cn:8000/eureka/
+    # 服务以IP地址注册
+    EUREKA_INSTANCE_PREFER_IP_ADDRESS: true
+    # 续约间隔时间，默认30秒
+    EUREKA_INSTANCE_LEASE_RENEWAL_INTERVAL_IN_SECONDS: 30
+    # 实例故障摘除时间，默认90秒，实际是90*2=180秒，配置45就是90秒
+    EUREKA_INSTANCE_LEASE_EXPIRATION_DURATION_IN_SECONDS: 45
+    # 单个文件上传最大
+    SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE: 100MB
+    # 上传请求最大限制
+    SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE: 100MB
+    # 是否启用配置中心
+    SPRING_CLOUD_CONFIG_ENABLED: false
+    # 配置中心地址
+    SPRING_CLOUD_CONFIG_URI: http://dev.hzero.com.cn:8010/
+    # 数据库地址
+    SPRING_DATASOURCE_URL: jdbc:mysql://db.hzero.com.cn:3306/hzero_platform?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    # 数据库用户名
+    SPRING_DATASOURCE_USERNAME: hzero
+    # 数据库密码
+    SPRING_DATASOURCE_PASSWORD: hzero
+    # 连接池最小空闲连接数
+    SPRING_DATASOURCE_MINIMUM_IDLE: 20
+    # 连接池允许的最大连接数
+    SPRING_DATASOURCE_MAXIMUM_POOL_SIZE: 200
+    # 等待连接池分配连接的最大时长（毫秒）
+    SPRING_DATASOURCE_CONNECTION_TIMEOUT: 30000
+    # Redis host
+    SPRING_REDIS_HOST: redis.hzero.com.cn
+    # Redis Port
+    SPRING_REDIS_PORT: 6379
+    # Redis DB
+    SPRING_REDIS_DATABASE: 4
+    # 当资源池连接用尽后，调用者的最大等待时间(单位为毫秒)
+    # 默认 -1 表示永不超时，设置5秒
+    SPRING_REDIS_POOL_MAX_WAIT: 5000
+    # 资源池中最大连接数
+    # 默认8，-1表示无限制；可根据服务并发redis情况及服务端的支持上限调整
+    SPRING_REDIS_POOL_MAX_ACTIVE: 50
+    # 资源池运行最大空闲的连接数
+    # 默认8，-1表示无限制；可根据服务并发redis情况及服务端的支持上限调整，一般建议和max-active保持一致，避免资源伸缩带来的开销
+    SPRING_REDIS_POOL_MAX_IDLE: 50
+    # Redis连接超时时间
+    SPRING_REDIS_CONNECT_TIMEOUT: 2000
+    # Redis读取超时时间
+    SPRING_REDIS_READ_TIMEOUT: 5000
+    # 是否重试
+    SPRING_CLOUD_LB_RETRY_ENABLED: false
+    # 重试下一个实例的次数
+    SPRING_CLOUD_LB_RETRY_NEXT: 1
+    # 重试同一个实例的次数
+    SPRING_CLOUD_LB_RETRY_SAME: 0
+    # LB 中缓存实例的过期时间
+    SPRING_CLOUD_LB_CACHE_TTL: 10s
+    # 连接超时
+    SPRING_CLOUD_GATEWAY_HTTPCLIENT_CONNECTION_TIMEOUT: 2000
+    # 读取超时
+    SPRING_CLOUD_GATEWAY_HTTPCLIENT_RESPONSE_TIMEOUT: 20s
+    # Ribbon从DiscoveryClient同步Server的间隔时间
+    RIBBON_SERVER_LIST_REFRESH_INTERVAL: 10000
+    # IO线程数, 它主要执行非阻塞的任务
+    SERVER_UNDERTOW_IO_THREADS: 4
+    # 阻塞任务线程池
+    SERVER_UNDERTOW_WORKER_THREADS: 128
+    # 每块buffer的空间大小，越小空间被利用越充分
+    SERVER_UNDERTOW_BUFFER_SIZE: 1024
+    # 生效配置
+    SPRING_PROFILES_ACTIVE: default
+    # 标签
+    SPRING_CLOUD_CONFIG_LABEL: null
+    # 是否检查菜单中包含了API权限
+    HZERO_GATEWAY_FILTER_MENU_PERMISSION: false
+    # 是否启用API防重放
+    HZERO_GATEWAY_FILTER_API_REPLAY: false
+    # 是否启用限流，默认启用
+    HZERO_GATEWAY_RATE_LIMIT_ENABLED: true
+    # 是否启用获取请求体数据过滤器
+    HZERO_GATEWAY_FILTER_GET_REQUEST_BODY: false
+    # 是否启用接口数据权限，注意需要开启获取请求体数据过滤器(HZERO_GATEWAY_FILTER_GET_REQUEST_BODY)
+    HZERO_GATEWAY_FILTER_API_AUTHORITY: false
+    # 允许跨域的域
+    SECURE_HEADERS_FRAME_OPTIONS: allow-from http://hzeronf.saas.hand-china.com
+    # 开启主键加密  encrypt（主键加密）、to_string（主键变字符串类型）、do_nothing（关闭加密）
+    HZERO_REQUEST_ENCRYPT_MODE: encrypt
+    # 日志级别
+    LOG_LEVEL: info
+    JAVA_OPTS: |
+      -Xms1024m -Xmx1536m
+metrics:
+  path: /actuator/prometheus
+  group: spring-boot
+logs:
+  parser: spring-boot
+persistence:
+  enabled: false
+service:
+  enabled: false
+  type: ClusterIP
+  port: 8080
+  name: hzero-gateway
+ingress:
+  enabled: false
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources,such as Minikube. If you do want to specify resources,uncomment the following
+  # lines,adjust them as necessary,and remove the curly braces after 'resources:'.
+  limits:
+    # cpu: 100m
+    memory: 1.7Gi
+  requests:
+    # cpu: 100m
+    memory: 1.2Gi

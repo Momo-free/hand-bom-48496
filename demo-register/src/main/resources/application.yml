@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: hzero-register
+server:
+  undertow:
+    threads:
+      # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接
+      # 默认值为8，建议设置每个CPU核心一个线程
+      io: ${SERVER_UNDERTOW_IO_THREADS:4}
+      # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程
+      # 默认等于 io-threads*8，它的值设置取决于系统的负载，可适当调大该值
+      worker: ${SERVER_UNDERTOW_WORKER_THREADS:128}
+    # 每块buffer的空间大小，越小空间被利用越充分
+    # 不要设置太大，以免影响其他应用，合适即可
+    buffer-size: ${SERVER_UNDERTOW_BUFFER_SIZE:1024}
+    # 是否分配的直接内存(NIO直接分配的堆外内存)。默认false
+    direct-buffers: true
+    # HTTP POST请求最大的大小。默认0，无限制，可设置10M
+    max-http-post-size: 10485760
+eureka:
+  instance:
+    # 以IP注册到注册中心
+    preferIpAddress: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS:true}
+    # 续约间隔时间，默认30秒
+    leaseRenewalIntervalInSeconds: ${EUREKA_INSTANCE_LEASE_RENEWAL_INTERVAL_IN_SECONDS:30}
+    # 实例故障摘除时间，默认90秒，实际是90*2=180秒，配置45就是90秒
+    leaseExpirationDurationInSeconds: ${EUREKA_INSTANCE_LEASE_EXPIRATION_DURATION_IN_SECONDS:45}
+    # 服务的一些元数据信息
+    metadata-map:
+      VERSION: 1.7.0
+  client:
+    # 检索服务选项，注册中心不需要检索服务
+    fetch-registry: ${EUREKA_CLIENT_FETCH_REGISTRY:false}
+    # 注册中心将自己作为客户端来尝试注册自己，注册中心集群环境下需开启此配置
+    register-with-eureka: ${EUREKA_CLIENT_REGISTER_WITH_EUREKA:false}
+    serviceUrl:
+      defaultZone: ${EUREKA_DEFAULT_ZONE:http://dev.hzero.com.cn:8000/eureka}
+    registryFetchIntervalSeconds: 30
+  server:
+    # 摘除故障实例的定时任务的周期
+    evictionIntervalTimerInMs: 4000
+    # 启用自我保护机制
+    enable-self-preservation: ${EUREKA_SERVER_ENABLE_SELF_PRESERVATION:false}

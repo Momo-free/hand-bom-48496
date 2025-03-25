@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hzerobom48496.infrastructure.mapper.ComboBOMMapper">
+    <select id="selectComboBOMsByConditions" resultType="com.example.hzerobom48496.domain.entity.ComboBOM">
+        SELECT * FROM hzero_bom_48496.combo_bom_table
+        WHERE 1 = 1
+        <if test="menuPackageName != null and menuPackageName != ''">
+            AND menu_package_name LIKE CONCAT('%', #{menuPackageName}, '%')
+        </if>
+        <if test="packageName != null and packageName != ''">
+            AND package_name LIKE CONCAT('%', #{packageName}, '%')
+        </if>
+    </select>
+</mapper>

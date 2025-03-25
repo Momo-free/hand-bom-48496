@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="demo-scheduler-saas-snapshot" />
+        <module name="demo-swagger-snapshot" />
+        <module name="demo-import-saas-snapshot" />
+        <module name="demo-admin-saas-snapshot" />
+        <module name="demo-register-snapshot" />
+        <module name="demo-platform-saas-snapshot" />
+        <module name="demo-config-snapshot" />
+        <module name="demo-gateway-snapshot" />
+        <module name="demo-report-saas-snapshot" />
+        <module name="hzero-bom-48496" />
+        <module name="demo-file-saas-snapshot" />
+        <module name="demo-message-saas-snapshot" />
+        <module name="demo-oauth-snapshot" />
+        <module name="demo-iam-saas-snapshot" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="demo-admin-saas-snapshot" options="-parameters" />
+      <module name="demo-config-snapshot" options="-parameters" />
+      <module name="demo-file-saas-snapshot" options="-parameters" />
+      <module name="demo-gateway-snapshot" options="-parameters" />
+      <module name="demo-iam-saas-snapshot" options="-parameters" />
+      <module name="demo-import-saas-snapshot" options="-parameters" />
+      <module name="demo-message-saas-snapshot" options="-parameters" />
+      <module name="demo-oauth-snapshot" options="-parameters" />
+      <module name="demo-parent" options="-parameters" />
+      <module name="demo-platform-saas-snapshot" options="-parameters" />
+      <module name="demo-register-snapshot" options="-parameters" />
+      <module name="demo-report-saas-snapshot" options="-parameters" />
+      <module name="demo-scheduler-saas-snapshot" options="-parameters" />
+      <module name="demo-swagger-snapshot" options="-parameters" />
+    </option>
+  </component>
+</project>

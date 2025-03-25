@@ -1,0 +1,98 @@
+# Default values for this service.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 1
+image:
+  repository: registry.choerodon.com.cn/hzero-hzero/hzero-event
+  pullPolicy: Always
+deployment:
+  managementPort: 8136
+env:
+  open:
+    HZERO_START_INIT_USER: false
+    # 初始化导入表，第一次启动服务的时候需开启此设置
+    HZERO_IMPORT_INIT-TABLE: false
+    # 数据权限本地缓存过期时间
+    HZERO_DATA_PERMISSION_CACHE_EXPIR_TIME: 1s
+    # 是否自动刷新服务权限
+    CHOERODON_EUREKA_EVENT_PARSE_PERMISSION: true
+    # Eureka 注册中心地址
+    EUREKA_DEFAULT_ZONE: http://dev.hzero.com.cn:8000/eureka/
+    # 服务以IP地址注册
+    EUREKA_INSTANCE_PREFER_IP_ADDRESS: true
+    # 是否启用配置中心
+    SPRING_CLOUD_CONFIG_ENABLED: false
+    # 配置中心地址
+    SPRING_CLOUD_CONFIG_URI: http://dev.hzero.com.cn:8010/
+    # 数据库地址
+    SPRING_DATASOURCE_URL: jdbc:mysql://db.hzero.com.cn:3306/hzero_event?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    # 数据库用户名
+    SPRING_DATASOURCE_USERNAME: hzero
+    # 数据库密码
+    SPRING_DATASOURCE_PASSWORD: hzero
+    # 最小空闲连接数量
+    SPRING_DATASOURCE_MINIMUM_IDLE: 20
+    # 连接池最大连接数
+    SPRING_DATASOURCE_MAXIMUM_POOL_SIZE: 50
+    # 是否重试
+    SPRING_CLOUD_LB_RETRY_ENABLED: false
+    # 重试下一个实例的次数
+    SPRING_CLOUD_LB_RETRY_NEXT: 1
+    # 重试同一个实例的次数
+    SPRING_CLOUD_LB_RETRY_SAME: 0
+    # LB 中缓存实例的过期时间
+    SPRING_CLOUD_LB_CACHE_TTL: 10s
+    # Redis连接超时时间
+    SPRING_REDIS_CONNECT_TIMEOUT: 2000
+    # Redis读取超时时间
+    SPRING_REDIS_READ_TIMEOUT: 5000
+    #是否记录事件消息
+    HZERO_RECORD_EVENT_DATA: true
+    #是否检查事件code
+    HZERO_CHECK_EVENT_CODE: true
+    # Redis host
+    SPRING_REDIS_HOST: redis.hzero.com.cn
+    # Redis Port
+    SPRING_REDIS_PORT: 6379
+    # Redis DB
+    SPRING_REDIS_DATABASE: 4
+    # 日志级别
+    LOG_LEVEL: info
+    # 启用断路器
+    FEIGN_CIRCUITBREAKER_ENABLED: true
+    # 配置请求GZIP压缩
+    FEIGN_COMPRESSION_REQUEST_ENABLED: true
+    # 配置压缩数据大小的下限
+    FEIGN_COMPRESSION_REQUEST_MIN_REQUEST_SIZE: 2048
+    # 连接超时
+    FEIGN_CLIENT_CONFIG_DEFAULT_CONNECT_TIMEOUT: 2000
+    # 读取超时
+    FEIGN_CLIENT_CONFIG_DEFAULT_READ_TIMEOUT: 5000
+    JAVA_OPTS: |
+      -Xms1024m -Xmx1536m
+    SKYWALKING_OPTS: -javaagent:/agent/skywalking-agent.jar -Dskywalking.agent.namespace=hops-dev
+      -Dskywalking.agent.service_name=hzero-event -Dskywalking.collector.backend_service=172.23.16.84:11800
+metrics:
+  path: /actuator/prometheus
+  group: spring-boot
+logs:
+  parser: spring-boot
+persistence:
+  enabled: false
+service:
+  enabled: false
+  type: ClusterIP
+  port: 8135
+ingress:
+  enabled: false
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources,such as Minikube. If you do want to specify resources,uncomment the following
+  # lines,adjust them as necessary,and remove the curly braces after 'resources:'.
+  limits:
+    # cpu: 100m
+    memory: 4Gi
+  requests:
+    # cpu: 100m
+    memory: 2Gi

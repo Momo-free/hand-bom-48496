@@ -1,0 +1,293 @@
+spring:
+  application:
+    name: hzero-gateway
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://db.hzero.com.cn:3306/hzero_platform?useUnicode=true&characterEncoding=utf-8&useSSL=false}
+    username: ${SPRING_DATASOURCE_USERNAME:hzero}
+    password: ${SPRING_DATASOURCE_PASSWORD:hzero}
+    hikari:
+      # 连接池最小空闲连接数
+      minimum-idle: ${SPRING_DATASOURCE_MINIMUM_IDLE:20}
+      # 连接池允许的最大连接数
+      maximum-pool-size: ${SPRING_DATASOURCE_MAXIMUM_POOL_SIZE:200}
+      # 等待连接池分配连接的最大时长（毫秒）
+      connection-timeout: ${SPRING_DATASOURCE_CONNECTION_TIMEOUT:30000}
+  cache:
+    multi:
+      l1:
+        enabled: ${SPRING_CACHE_L1_ENABLED:false} # 是否开启一级缓存
+        type: caffeine # 一级缓存实现。目前支持caffeine和guava
+      l2:
+        enabled: ${SPRING_CACHE_L2_ENABLED:false} # 是否开启二级缓存
+        type: redis # 二级缓存的实现
+      caches:
+        permission:
+          l1Enabled: ${SPRING_CACHE_PERMISSION_L1_ENABLED:false}
+          l1-spec: ${SPRING_CACHE_PERMISSION_L1_SPEC:initialCapacity=50,maximumSize=500,expireAfterWrite=300s}
+          l2Enabled: ${SPRING_CACHE_PERMISSION_L2_ENABLED:false}
+          l2-spec: ${SPRING_CACHE_PERMISSION_L2_SPEC:expiration=300}
+        # 根据条件查询权限分配的租户ids
+        permission-source-ids:
+          l1Enabled: ${SPRING_CACHE_PERMISSION_SOURCE_IDS_L1_ENABLED:false}
+          l1-spec: ${SPRING_CACHE_PERMISSION_SOURCE_IDS_L1_SPEC:initialCapacity=50,maximumSize=2048,expireAfterWrite=60s}
+          l2Enabled: ${SPRING_CACHE_PERMISSION_SOURCE_IDS_L2_ENABLED:false}
+          l2-spec: ${SPRING_CACHE_PERMISSION_SOURCE_IDS_L2_SPEC:expiration=60}
+        # 判断权限在对应的菜单下是否存在
+        permission-menu-permission:
+          l1Enabled: ${SPRING_CACHE_PERMISSION_MENU_PERMISSION_L1_ENABLED:false}
+          l1-spec: ${SPRING_CACHE_PERMISSION_MENU_PERMISSION_L1_SPEC:initialCapacity=50,maximumSize=1024,expireAfterWrite=60s}
+          l2Enabled: ${SPRING_CACHE_PERMISSION_MENU_PERMISSION_L2_ENABLED:false}
+          l2-spec: ${SPRING_CACHE_PERMISSION_MENU_PERMISSION_L2_SPEC:expiration=60}
+        # 查询角色id在指定的成员下是否正常使用
+        permission-member-role:
+          l1Enabled: ${SPRING_CACHE_PERMISSION_MEMBER_ROLE_L1_ENABLED:false}
+          l1-spec: ${SPRING_CACHE_PERMISSION_MEMBER_ROLE_L1_SPEC:initialCapacity=50,maximumSize=2048,expireAfterWrite=60s}
+          l2Enabled: ${SPRING_CACHE_PERMISSION_MEMBER_ROLE_L2_ENABLED:false}
+          l2-spec: ${SPRING_CACHE_PERMISSION_MEMBER_ROLE_L2_SPEC:expiration=60}
+    multipart:
+      maxFileSize: ${SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE:100MB}
+      maxRequestSize: ${SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE:100MB}
+  redis:
+    host: ${SPRING_REDIS_HOST:redis.hzero.com.cn}
+    port: ${SPRING_REDIS_PORT:6379}
+    database: ${SPRING_REDIS_DATABASE:4}
+    # Redis连接超时时间
+    connect-timeout: ${SPRING_REDIS_CONNECT_TIMEOUT:2000}
+    # Redis读取超时时间
+    timeout: ${SPRING_REDIS_READ_TIMEOUT:5000}
+    lettuce:
+      pool:
+        # 资源池中最大连接数
+        # 默认8，-1表示无限制；可根据服务并发redis情况及服务端的支持上限调整
+        max-active: ${SPRING_REDIS_POOL_MAX_ACTIVE:50}
+        # 资源池运行最大空闲的连接数
+        # 默认8，-1表示无限制；可根据服务并发redis情况及服务端的支持上限调整，一般建议和max-active保持一致，避免资源伸缩带来的开销
+        max-idle: ${SPRING_REDIS_POOL_MAX_IDLE:50}
+        # 当资源池连接用尽后，调用者的最大等待时间(单位为毫秒)
+        # 默认 -1 表示永不超时，设置5秒
+        max-wait: ${SPRING_REDIS_POOL_MAX_WAIT:5000}
+  cloud:
+    gateway:
+      filter:
+        secure-headers:
+          frame-options: ${SECURE_HEADERS_FRAME_OPTIONS:allow-from http://hzeronf.saas.hand-china.com}
+      discovery:
+        locator:
+          enabled: false
+      routes:
+      - id: hiam
+        uri: lb://hzero-iam
+        predicates:
+        - Path=/iam/**
+        filters:
+        - StripPrefix=1
+      - id: hoth
+        uri: lb://hzero-oauth
+        predicates:
+        - Path=/oauth/**
+        filters:
+        - PreserveHostHeader
+      - id: hwgr
+        uri: lb://hzero-swagger
+        predicates:
+        - Path=/swagger/**
+        filters:
+        - StripPrefix=1
+      - id: hagd
+        uri: lb://hzero-asgard
+        predicates:
+        - Path=/hagd/**
+        filters:
+        - StripPrefix=1
+      - id: hpfm
+        uri: lb://hzero-platform
+        predicates:
+        - Path=/hpfm/**
+        filters:
+        - StripPrefix=1
+      - id: hfle
+        uri: lb://hzero-file
+        predicates:
+        - Path=/hfle/**
+        filters:
+        - StripPrefix=1
+      - id: hmsg
+        uri: lb://hzero-message
+        predicates:
+        - Path=/hmsg/**
+        filters:
+        - StripPrefix=1
+      - id: hsdr
+        uri: lb://hzero-scheduler
+        predicates:
+        - Path=/hsdr/**
+        filters:
+        - StripPrefix=1
+      - id: himp
+        uri: lb://hzero-import
+        predicates:
+        - Path=/himp/**
+        filters:
+        - StripPrefix=1
+      - id: hrpt
+        uri: lb://hzero-report
+        predicates:
+        - Path=/hrpt/**
+      - id: hwfp
+        uri: lb://hzero-workflow-plus
+        predicates:
+        - Path=/hwfp/**
+        filters:
+        - StripPrefix=1
+      - id: hpay
+        uri: lb://hzero-pay
+        predicates:
+        - Path=/hpay/**
+        filters:
+        - StripPrefix=1
+      - id: hadm
+        uri: lb://hzero-admin
+        predicates:
+        - Path=/hadm/**
+      - id: hprt
+        uri: lb://hzero-printer
+        predicates:
+        - Path=/hprt/**
+        filters:
+        - StripPrefix=1
+      - id: htdo
+        uri: lb://hzero-todo
+        predicates:
+        - Path=/htdo/**
+        filters:
+        - StripPrefix=1
+      - id: hgen
+        uri: lb://hzero-generator
+        predicates:
+        - Path=/hgen/**
+        filters:
+        - StripPrefix=1
+      - id: hzero_bom_48496_route
+        uri: lb://hzero-bom-48496
+        predicates:
+          - Path=/combo-bom/**
+        filters:
+          - StripPrefix=1
+      default-filters:
+        # 开启主键加密 可选值 encrypt（主键加密）、to_string（主键变字符串类型）、do_nothing（关闭加密）
+      - SetRequestHeader=H-Request-Encrypt, ${HZERO_REQUEST_ENCRYPT_MODE:encrypt}
+      - SetResponseHeader=Access-Control-Expose-Headers, Content-Disposition
+      - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        Vary, RETAIN_UNIQUE
+        # 文件下载需要加上该请求头
+        # 过滤重复的请求头
+      httpclient:
+        # 连接超时
+        connect-timeout: ${SPRING_CLOUD_GATEWAY_HTTPCLIENT_CONNECTION_TIMEOUT:2000}
+        # 读取超时
+        response-timeout: ${SPRING_CLOUD_GATEWAY_HTTPCLIENT_RESPONSE_TIMEOUT:20s}
+mybatis:
+  mapperLocations: classpath*:/mapper/*.xml
+  configuration:
+    mapUnderscoreToCamelCase: true
+hzero:
+  gateway:
+    # 跨域配置
+    cors:
+      allowed-origins:
+      - ${HZERO_GATEWAY_CORS_ALLOWED_ORIGINS:*}
+      allowed-headers:
+      - ${HZERO_GATEWAY_CORS_ALLOWED_HEADERS:*}
+      allowed-methods:
+      - ${HZERO_GATEWAY_CORS_ALLOWED_METHODS:*}
+    filter:
+      get-request-body:
+        # 是否启用获取请求体数据过滤器
+        enabled: ${HZERO_GATEWAY_FILTER_GET_REQUEST_BODY:false}
+    # 限流配置
+    rate-limit:
+      # 是否启用限流，默认启用
+      enabled: ${HZERO_GATEWAY_RATE_LIMIT_ENABLED:true}
+    helper:
+      ## 启用API签名
+      signature:
+        enabled: false
+        secrets:
+        - secretId: hzero
+          secretKey: 537509248a3da7804d12905c102d14cd1bec000797a6178a7353a4c3ac23a0b3
+      # 是否打印 JWT
+      enabled-jwt-log: ${HZERO_GATEWAY_HELPER_ENABLE_JWT_LOG:false}
+      filter:
+        collect-span:
+          # 是否统计API访问情况
+          enabled: ${HZERO_GATEWAY_FILTER_COLLECT_SPAN_ENABLED:false}
+        common-request:
+          # 租户级API是否必须检查租户参数
+          check-tenant: ${HZERO_GATEWAY_FILTER_COMMON_REQUEST_CHECK_ORGANIZATION:true}
+          # 项目级API是否必须检查项目参数
+          check-project: ${HZERO_GATEWAY_FILTER_COMMON_REQUEST_CHECK_PROJECT:true}
+          # 是否启用标准的权限检查
+          enabled: ${HZERO_GATEWAY_FILTER_COMMON_REQUEST_ENABLE:true}
+        menu-permission:
+          # 是否检查菜单中包含了API权限
+          enabled: ${HZERO_GATEWAY_FILTER_MENU_PERMISSION:false}
+        api-replay:
+          # 是否启用API防重放
+          enabled: ${HZERO_GATEWAY_FILTER_API_REPLAY:true}
+          skip-paths:
+          - /hwfp/**
+        get-user:
+          # 检查令牌篡改
+          enable-check-token-tamper: ${HZERO_GATEWAY_FILTER_GET_USER_CHECK_TOKEN_TAMPER:true}
+        api-authority:
+          # 是否启用接口数据权限，注意需要开启获取请求体数据过滤器(HZERO_GATEWAY_FILTER_GET_REQUEST_BODY)
+          enabled: ${HZERO_GATEWAY_FILTER_API_AUTHORITY:false}
+          # 接口数据权限单据租户类型：默认当前租户
+          doc-tenant-type: ${HZERO_GATEWAY_FILTER_API_AUTHORITY_DOC_TENANT_TYPE:CUSTOM_TENANT}
+      permission:
+        cache-seconds: 30 # 请求地址和对应的权限缓存时间
+        cache-size: 3000 # 请求地址和对应的权限缓存大小
+        skip-paths:
+        - /oauth/**
+        - /hap/lib/**
+        - /hap/static/**
+        - /hap/resources/**
+        - /hap/editor-app/**
+        - /swagger/**
+        - /hwfp/editor-app/**
+        - /hwfp/lib/**
+        - /hwfp/activiti-editor
+        - /*/sock-js/**
+        - /*/websocket/**
+        - /maintain
+        - /actuator/**
+        - /hexl/lib/**
+        - /hexl-*/lib/**
+        - /hims/lib/**
+        - /*/static/**
+        - /**/webjars/**
+        - /hrpt/ureport/**
+  ## 服务整体运维配置
+  maintain:
+    # 全局运维信息
+    global-info:
+      state: NORMAL
+    # 服务运维信息
+    service-maintain-info:
+      oauth:
+        state: NORMAL
+    # 运维接口密钥，不配置则在程序启动时生成随机key
+    secret-key: hzero
+  request:
+    counter:
+      # http请求监控
+      enable: ${HZERO_REQUEST_COUNTER_ENABLE:false}
+logging:
+  level:
+    org.springframework.cloud: info
+    io.github.resilience4j: info
+    com.netflix.discovery: warn
+    org.hzero.boot.platform.lov: info
+    org.apache.ibatis: ${LOG_LEVEL:info}
+    io.choerodon: ${LOG_LEVEL:info}
+    org.hzero: ${LOG_LEVEL:info}

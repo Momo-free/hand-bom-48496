@@ -1,0 +1,90 @@
+# application.yml
+spring:
+  application:
+    name: hzero-event
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://db.hzero.com.cn:3306/hzero_event?useUnicode=true&characterEncoding=utf-8&useSSL=false}
+    username: ${SPRING_DATASOURCE_USERNAME:hzero}
+    password: ${SPRING_DATASOURCE_PASSWORD:hzero}
+    hikari:
+      # 最小空闲连接数量
+      minimum-idle: ${SPRING_DATASOURCE_MINIMUM_IDLE:20}
+      # 连接池最大连接数
+      maximum-pool-size: ${SPRING_DATASOURCE_MAXIMUM_POOL_SIZE:50}
+  cloud:
+    stream:
+      record-event-data: ${HZERO_RECORD_EVENT_DATA:true}
+      category: ${EVENT_CATEGORY:}
+      check-event-code: ${HZERO_CHECK_EVENT_CODE:true}
+    loadbalancer:
+      retry:
+        # 是否重试
+        enabled: ${SPRING_CLOUD_LB_RETRY_ENABLED:false}
+        # 重试下一个实例的次数
+        max-retries-on-next-service-instance: ${SPRING_CLOUD_LB_RETRY_NEXT:1}
+        # 重试同一个实例的次数
+        max-retries-on-same-service-instance: ${SPRING_CLOUD_LB_RETRY_SAME:0}
+      cache:
+        # LB 中缓存实例的过期时间
+        ttl: ${SPRING_CLOUD_LB_CACHE_TTL:10s}
+  redis:
+    # Redis连接超时时间
+    connect-timeout: ${SPRING_REDIS_CONNECT_TIMEOUT:2000}
+    # Redis读取超时时间
+    timeout: ${SPRING_REDIS_READ_TIMEOUT:5000}
+    host: ${SPRING_REDIS_HOST:localhost}
+    port: ${SPRING_REDIS_PORT:6379}
+    database: ${SPRING_REDIS_DATABASE:4}
+  servlet:
+    multipart:
+      max-file-size: ${SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE:50MB}
+      max-request-size: ${SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE:50MB}
+      enabled: true
+      file-size-threshold: ${SPRING_SERVLET_MULTIPART_FILE_SIZE_THRESHOLD:500KB}
+  web:
+    resources:
+      # 资源缓存时间，单位秒
+      cache:
+        period: 3600
+      chain:
+        # 开启压缩
+        compressed: true
+        # 启用缓存
+        cache: true
+mybatis:
+  mapperLocations: classpath*:/mapper/*.xml
+  configuration: # 数据库下划线转驼峰配置
+    mapUnderscoreToCamelCase: true
+feign:
+  circuitbreaker:
+    # 启用断路器
+    enabled: ${FEIGN_CIRCUITBREAKER_ENABLED:true}
+  # 请求压缩配置
+  compression:
+    request:
+      # 配置请求GZIP压缩
+      enabled: ${FEIGN_COMPRESSION_REQUEST_ENABLED:true}
+      # 配置压缩数据大小的下限
+      min-request-size: ${FEIGN_COMPRESSION_REQUEST_MIN_REQUEST_SIZE:2048}
+  # Feign客户端配置
+  client:
+    config:
+      # Feign客户端默认配置
+      default:
+        # 连接超时
+        connectTimeout: ${FEIGN_CLIENT_CONFIG_DEFAULT_CONNECT_TIMEOUT:2000}
+        # 读取超时
+        readTimeout: ${FEIGN_CLIENT_CONFIG_DEFAULT_READ_TIMEOUT:5000}
+        # Feign日志级别：NONE/BASIC/HEADERS/FULL
+        loggerLevel: ${FEIGN_CLIENT_CONFIG_DEFAULT_LOGGER_LEVEL:FULL}
+hzero:
+  data:
+    permission:
+      # 数据权限本地缓存过期时间
+      local-cache-expiration-time: ${HZERO_DATA_PERMISSION_CACHE_EXPIR_TIME:1s}
+logging:
+  level:
+    org.hzero: ${LOG_LEVEL:debug}
+    org.hevt: ${LOG_LEVEL:debug}
+    com.zaxxer.hikari: ${LOG_LEVEL:debug}
+    java.sql: ${LOG_LEVEL:info}
