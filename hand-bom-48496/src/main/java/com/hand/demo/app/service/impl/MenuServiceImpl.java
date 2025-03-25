@@ -11,9 +11,6 @@ import io.choerodon.mybatis.service.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * ExampleServiceImpl
- */
 @Service
 public class MenuServiceImpl extends BaseServiceImpl<Menu> implements MenuService {
 
@@ -21,7 +18,7 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu> implements MenuServic
     private MenuMapper menuMapper;
 
     @Override
-    public Page<MenuComboDto> meuCombo(Long tenantId, MenuComboDto menuComboDto, PageRequest pageRequest) {
+    public Page<MenuComboDto> menuComboPage(Long tenantId, MenuComboDto menuComboDto, PageRequest pageRequest) {
         return PageHelper.doPage(pageRequest, () -> menuMapper.menuComboList(tenantId, menuComboDto));
     }
 }

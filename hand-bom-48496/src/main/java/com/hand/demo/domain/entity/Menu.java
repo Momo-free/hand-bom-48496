@@ -18,198 +18,113 @@ import java.util.Date;
 @Table(name = "menu")
 public class Menu extends AuditDomain {
 
-    /**
-     * id
-     */
     @Id
     @GeneratedValue
     @ApiModelProperty("id")
     private Long id;
 
-    /**
-     * 租户ID
-     */
     @NotNull
     @ApiModelProperty("租户ID")
     private Long tenantId;
 
-    /**
-     * 菜单描述
-     */
     @NotNull(message = "error.menuDescription.null")
     @ApiModelProperty("菜单描述")
     private String menuDescription;
 
-    /**
-     * 品牌
-     */
     @NotNull(message = "error.brand.null")
     @ApiModelProperty("品牌")
     private String brand;
 
-    /**
-     * 菜单名称
-     */
     @NotNull(message = "error.menuName.null")
     @ApiModelProperty("菜单名称")
     private String menuName;
 
-    /**
-     * 菜单编码
-     */
     @NotNull(message = "error.menuCode.null")
     @ApiModelProperty("菜单编码")
     private String menuCode;
 
-    /**
-     * 负责人
-     */
     @NotNull(message = "error.menuOwner.null")
     @ApiModelProperty("负责人")
     private String menuOwner;
 
-    /**
-     * menu的生效日期
-     */
     @NotNull(message = "error.menuStartDate.null")
     @ApiModelProperty("菜单生效日期")
     private Date menuStartDate;
 
-    /**
-     * menu的失效日期
-     */
     @NotNull(message = "error.menuEndDate.null")
     @ApiModelProperty("菜单失效日期")
     private Date menuEndDate;
 
-    /**
-     * 备注
-     */
     private String remark;
 
-
-    /**
-     * 菜单描述
-     */
     public String getMenuDescription() {
         return menuDescription;
     }
 
-    /**
-     * 菜单描述
-     */
     public void setMenuDescription(String menuDescription) {
         this.menuDescription = menuDescription;
     }
 
-    /**
-     * 品牌
-     */
     public String getBrand() {
         return brand;
     }
 
-    /**
-     * 品牌
-     */
     public void setBrand(String brand) {
         this.brand = brand;
     }
 
-    /**
-     * 菜单名称
-     */
     public String getMenuName() {
         return menuName;
     }
 
-    /**
-     * 菜单名称
-     */
     public void setMenuName(String menuName) {
         this.menuName = menuName;
     }
 
-    /**
-     * 菜单编码
-     */
     public String getMenuCode() {
         return menuCode;
     }
 
-    /**
-     * 菜单编码
-     */
     public void setMenuCode(String menuCode) {
         this.menuCode = menuCode;
     }
 
-    /**
-     * 负责人
-     */
     public String getMenuOwner() {
         return menuOwner;
     }
 
-    /**
-     * 负责人
-     */
     public void setMenuOwner(String menuOwner) {
         this.menuOwner = menuOwner;
     }
 
-    /**
-     * menu的生效日期
-     */
     public Date getMenuStartDate() {
         return menuStartDate;
     }
 
-    /**
-     * menu的生效日期
-     */
     public void setMenuStartDate(Date menuStartDate) {
         this.menuStartDate = menuStartDate;
     }
 
-    /**
-     * menu的失效日期
-     */
     public Date getMenuEndDate() {
         return menuEndDate;
     }
 
-    /**
-     * menu的失效日期
-     */
     public void setMenuEndDate(Date menuEndDate) {
         this.menuEndDate = menuEndDate;
     }
 
-    /**
-     * 备注
-     */
     public String getRemark() {
         return remark;
     }
 
-    /**
-     * 备注
-     */
     public void setRemark(String remark) {
         this.remark = remark;
     }
 
-    /**
-     * id
-     */
     public Long getId() {
         return id;
     }
 
-    /**
-     * id
-     */
     public void setId(Long id) {
         this.id = id;
     }

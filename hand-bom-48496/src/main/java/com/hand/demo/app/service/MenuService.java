@@ -6,9 +6,6 @@ import io.choerodon.core.domain.Page;
 import io.choerodon.mybatis.pagehelper.domain.PageRequest;
 import io.choerodon.mybatis.service.BaseService;
 
-/**
- * ExampleService
- */
 public interface MenuService extends BaseService<Menu> {
-    Page<MenuComboDto> meuCombo(Long tenantId, MenuComboDto menuComboDto, PageRequest pageRequest);
+    Page<MenuComboDto> menuComboPage(Long tenantId, MenuComboDto menuComboDto, PageRequest pageRequest);
 }

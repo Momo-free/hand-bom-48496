@@ -3,65 +3,17 @@ package com.hand.demo.api.controller.v1.dto;
 import java.util.Date;
 
 public class MenuComboDto {
-    /**
-     * 菜单名称
-     */
     private String menuName;
-
-    /**
-     * 菜单编码
-     */
     private String menuCode;
-
-    /**
-     * 菜单负责人
-     */
     private String menuOwner;
-
-    /**
-     * 套餐名称
-     */
     private String comboName;
-
-    /**
-     * 套餐编码
-     */
     private String comboCode;
-
-
-    /**
-     * 套餐类型
-     */
     private String comboType;
-
-    /**
-     * 销售地区
-     */
     private String salesArea;
-
-    /**
-     * 有效起始日期
-     */
     private Date comboStartDate;
-
-    /**
-     * 有效终止时间
-     */
     private Date comboEndDate;
-
-    /**
-     * 最后更新时间
-     */
     private Date lastUpdateDate;
-
-    /**
-     * 套餐负责人
-     */
     private String comboOwner;
-
-    /**
-     * 租户ID
-     */
     private Long tenantId;
 
     public String getMenuName() {
@@ -159,5 +111,4 @@ public class MenuComboDto {
     public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
     }
-
 }
