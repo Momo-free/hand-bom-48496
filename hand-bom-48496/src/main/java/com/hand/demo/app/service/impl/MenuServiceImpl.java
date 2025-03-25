@@ -21,4 +21,8 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu> implements MenuServic
     public Page<MenuComboDto> menuComboPage(Long tenantId, MenuComboDto menuComboDto, PageRequest pageRequest) {
         return PageHelper.doPage(pageRequest, () -> menuMapper.menuComboList(tenantId, menuComboDto));
     }
+    @Override
+    public MenuComboDto getMenuComboById(Long menuId) {
+        return menuMapper.getMenuComboById(menuId);
+    }
 }

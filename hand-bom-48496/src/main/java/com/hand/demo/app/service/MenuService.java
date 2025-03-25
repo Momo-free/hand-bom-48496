@@ -8,4 +8,5 @@ import io.choerodon.mybatis.service.BaseService;
 
 public interface MenuService extends BaseService<Menu> {
     Page<MenuComboDto> menuComboPage(Long tenantId, MenuComboDto menuComboDto, PageRequest pageRequest);
+    MenuComboDto getMenuComboById(Long menuId);
 }

@@ -57,4 +57,23 @@
             </if>
         </where>
     </select>
+    <select id="getMenuComboById" resultType="com.hand.demo.api.controller.v1.dto.MenuComboDto">
+        SELECT
+            menu.menu_name AS menuName,
+            menu.menu_code AS menuCode,
+            menu.menu_owner AS menuOwner,
+            combo.combo_name AS comboName,
+            combo.combo_code AS comboCode,
+            combo.combo_type AS comboType,
+            combo.sales_area AS salesArea,
+            combo.combo_start_date AS comboStartDate,
+            combo.combo_end_date AS comboEndDate,
+            combo.combo_owner AS comboOwner
+        FROM
+            menu
+                LEFT JOIN
+            combo
+            ON menu.id = combo.menu_id
+        WHERE menu.id = #{menuId}
+    </select>
 </mapper>

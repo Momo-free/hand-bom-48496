@@ -71,4 +71,27 @@ public class MenuController extends BaseController {
         dto.setTenantId(tenantId);
         return ResponseEntity.ok(menuService.menuComboPage(tenantId, dto, pageRequest));
     }
+
+    @GetMapping("/new-menu")
+    @Permission(level = ResourceLevel.ORGANIZATION, permissionLogin = true)
+    @ApiOperation("跳转至 Menu 新建界面")
+    public ResponseEntity<MenuComboDto> newMenu() {
+        return ResponseEntity.ok(new MenuComboDto());
+    }
+
+    @GetMapping("/new-combo/{menuId}")
+    @Permission(level = ResourceLevel.ORGANIZATION, permissionLogin = true)
+    @ApiOperation("跳转至 Combo 新建界面")
+    public ResponseEntity<MenuComboDto> newCombo(@PathVariable Long menuId) {
+        MenuComboDto menuComboDto = menuService.getMenuComboById(menuId);
+        // 清空套餐相关信息，只保留菜单信息
+        menuComboDto.setComboName(null);
+        menuComboDto.setComboCode(null);
+        menuComboDto.setComboType(null);
+        menuComboDto.setSalesArea(null);
+        menuComboDto.setComboStartDate(null);
+        menuComboDto.setComboEndDate(null);
+        menuComboDto.setComboOwner(null);
+        return ResponseEntity.ok(menuComboDto);
+    }
 }

@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface MenuMapper extends BaseMapper<Menu> {
     List<MenuComboDto> menuComboList(Long tenantId, MenuComboDto menuComboDto);
+    MenuComboDto getMenuComboById(Long menuId);
 }
