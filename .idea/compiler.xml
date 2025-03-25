@@ -15,17 +15,21 @@
         <module name="demo-platform-saas-snapshot" />
         <module name="demo-config-snapshot" />
         <module name="demo-gateway-snapshot" />
+        <module name="demo" />
         <module name="demo-report-saas-snapshot" />
-        <module name="hzero-bom-48496" />
         <module name="demo-file-saas-snapshot" />
         <module name="demo-message-saas-snapshot" />
         <module name="demo-oauth-snapshot" />
         <module name="demo-iam-saas-snapshot" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="hzero-bom-48496" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="demo" options="-parameters" />
       <module name="demo-admin-saas-snapshot" options="-parameters" />
       <module name="demo-config-snapshot" options="-parameters" />
       <module name="demo-file-saas-snapshot" options="-parameters" />
