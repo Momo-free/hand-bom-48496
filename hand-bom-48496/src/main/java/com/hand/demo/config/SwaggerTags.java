@@ -12,12 +12,13 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Configuration
 public class SwaggerTags {
 
-    public static final String EXAMPLE = "Example";
+    public static final String Menu = "Menu";
+
 
     @Autowired
     public SwaggerTags(Docket docket) {
         docket.tags(
-                new Tag(EXAMPLE, "EXAMPLE 案例")
+                new Tag(Menu, "Menu 案例")
         );
     }
 }
