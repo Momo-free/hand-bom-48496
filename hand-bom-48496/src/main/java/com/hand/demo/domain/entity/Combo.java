@@ -1,108 +1,172 @@
 package com.hand.demo.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.choerodon.mybatis.annotation.ModifyAudit;
+import io.choerodon.mybatis.annotation.VersionAudit;
+import io.choerodon.mybatis.domain.AuditDomain;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-import io.choerodon.mybatis.annotation.ModifyAudit;
-import io.choerodon.mybatis.annotation.VersionAudit;
-import io.choerodon.mybatis.domain.AuditDomain;
-import io.swagger.annotations.ApiModelProperty;
-import org.hzero.core.util.Regexs;
-
 import java.util.Date;
 
-/**
- * 实体
- */
+@ApiModel("套餐信息")
 @ModifyAudit
 @VersionAudit
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "combo")
 public class Combo extends AuditDomain {
 
-    /**
-     * id
-     */
     @Id
     @GeneratedValue
+    @ApiModelProperty("id")
     private Long id;
 
-    /**
-     * 租户ID
-     */
     @NotNull
     @ApiModelProperty("租户ID")
     private Long tenantId;
 
-    /**
-     * 套餐描述
-     */
+    @NotNull(message = "error.comboDescription.null")
+    @ApiModelProperty("套餐描述")
     private String comboDescription;
 
-    /**
-     * 套餐名称
-     */
     @NotNull(message = "error.comboName.null")
+    @ApiModelProperty("套餐名称")
     private String comboName;
 
-    /**
-     * 套餐编码
-     */
     @NotNull(message = "error.comboCode.null")
+    @ApiModelProperty("套餐编码")
     private String comboCode;
 
-
-    /**
-     * 套餐类型，LTO/Permanent
-     */
     @NotNull(message = "error.comboType.null")
+    @ApiModelProperty("套餐类型，LTO/Permanent")
     private String comboType;
 
-    /**
-     * 销售地区
-     */
     @NotNull(message = "error.salesArea.null")
+    @ApiModelProperty("销售地区")
     private String salesArea;
 
-    /**
-     * 有效起始日期
-     */
     @NotNull(message = "error.comboStartDate.null")
+    @ApiModelProperty("有效起始日期")
     private Date comboStartDate;
 
-    /**
-     * 有效终止时间
-     */
     @NotNull(message = "error.comboEndDate.null")
+    @ApiModelProperty("有效终止时间")
     private Date comboEndDate;
 
-    /**
-     * 负责人
-     */
     @NotNull(message = "error.comboOwner.null")
+    @ApiModelProperty("负责人")
     private String comboOwner;
 
-    /**
-     * 备注
-     */
+    @ApiModelProperty("备注")
     private String remark;
 
-    /**
-     * 状态
-     */
     @NotNull(message = "error.comboStatus.null")
+    @ApiModelProperty("状态")
     private String comboStatus;
 
-
-    /**
-     * 套餐id
-     */
     @NotNull(message = "error.menuId.null")
+    @ApiModelProperty("套餐id")
     private Long menuId;
+
+    public String getComboDescription() {
+        return comboDescription;
+    }
+
+    public void setComboDescription(String comboDescription) {
+        this.comboDescription = comboDescription;
+    }
+
+    public String getComboName() {
+        return comboName;
+    }
+
+    public void setComboName(String comboName) {
+        this.comboName = comboName;
+    }
+
+    public String getComboCode() {
+        return comboCode;
+    }
+
+    public void setComboCode(String comboCode) {
+        this.comboCode = comboCode;
+    }
+
+    public String getComboType() {
+        return comboType;
+    }
+
+    public void setComboType(String comboType) {
+        this.comboType = comboType;
+    }
+
+    public String getSalesArea() {
+        return salesArea;
+    }
+
+    public void setSalesArea(String salesArea) {
+        this.salesArea = salesArea;
+    }
+
+    public Date getComboStartDate() {
+        return comboStartDate;
+    }
+
+    public void setComboStartDate(Date comboStartDate) {
+        this.comboStartDate = comboStartDate;
+    }
+
+    public Date getComboEndDate() {
+        return comboEndDate;
+    }
+
+    public void setComboEndDate(Date comboEndDate) {
+        this.comboEndDate = comboEndDate;
+    }
+
+    public String getComboOwner() {
+        return comboOwner;
+    }
+
+    public void setComboOwner(String comboOwner) {
+        this.comboOwner = comboOwner;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getComboStatus() {
+        return comboStatus;
+    }
+
+    public void setComboStatus(String comboStatus) {
+        this.comboStatus = comboStatus;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
+    }
 
     public Long getTenantId() {
         return tenantId;
@@ -110,175 +174,6 @@ public class Combo extends AuditDomain {
 
     public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
-    }
-
-    /**
-     * 套餐描述
-     */
-    public String getComboDescription() {
-        return comboDescription;
-    }
-
-    /**
-     * 套餐描述
-     */
-    public void setComboDescription(String comboDescription) {
-        this.comboDescription = comboDescription;
-    }
-
-    /**
-     * 套餐名称
-     */
-    public String getComboName() {
-        return comboName;
-    }
-
-    /**
-     * 套餐名称
-     */
-    public void setComboName(String comboName) {
-        this.comboName = comboName;
-    }
-
-    /**
-     * 套餐编码
-     */
-    public String getComboCode() {
-        return comboCode;
-    }
-
-    /**
-     * 套餐编码
-     */
-    public void setComboCode(String comboCode) {
-        this.comboCode = comboCode;
-    }
-
-    /**
-     * 套餐类型，LTO/Permanent
-     */
-    public String getComboType() {
-        return comboType;
-    }
-
-    /**
-     * 套餐类型，LTO/Permanent
-     */
-    public void setComboType(String comboType) {
-        this.comboType = comboType;
-    }
-
-    /**
-     * 销售地区
-     */
-    public String getSalesArea() {
-        return salesArea;
-    }
-
-    /**
-     * 销售地区
-     */
-    public void setSalesArea(String salesArea) {
-        this.salesArea = salesArea;
-    }
-
-    /**
-     * 有效起始日期
-     */
-    public Date getComboStartDate() {
-        return comboStartDate;
-    }
-
-    /**
-     * 有效起始日期
-     */
-    public void setComboStartDate(Date comboStartDate) {
-        this.comboStartDate = comboStartDate;
-    }
-
-    /**
-     * 有效终止时间
-     */
-    public Date getComboEndDate() {
-        return comboEndDate;
-    }
-
-    /**
-     * 有效终止时间
-     */
-    public void setComboEndDate(Date comboEndDate) {
-        this.comboEndDate = comboEndDate;
-    }
-
-
-    /**
-     * 负责人
-     */
-    public String getComboOwner() {
-        return comboOwner;
-    }
-
-    /**
-     * 负责人
-     */
-    public void setComboOwner(String comboOwner) {
-        this.comboOwner = comboOwner;
-    }
-
-    /**
-     * 备注
-     */
-    public String getRemark() {
-        return remark;
-    }
-
-    /**
-     * 备注
-     */
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    /**
-     * 状态
-     */
-    public String getComboStatus() {
-        return comboStatus;
-    }
-
-    /**
-     * 状态
-     */
-    public void setComboStatus(String comboStatus) {
-        this.comboStatus = comboStatus;
-    }
-
-    /**
-     * id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * id
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * 套餐id
-     */
-    public Long getMenuId() {
-        return menuId;
-    }
-
-    /**
-     * 套餐id
-     */
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
     }
 
     @Override
@@ -300,7 +195,6 @@ public class Combo extends AuditDomain {
                 && (this.getSalesArea() == null ? other.getSalesArea() == null : this.getSalesArea().equals(other.getSalesArea()))
                 && (this.getComboStartDate() == null ? other.getComboStartDate() == null : this.getComboStartDate().equals(other.getComboStartDate()))
                 && (this.getComboEndDate() == null ? other.getComboEndDate() == null : this.getComboEndDate().equals(other.getComboEndDate()))
-                && (this.getLastUpdateDate() == null ? other.getLastUpdateDate() == null : this.getLastUpdateDate().equals(other.getLastUpdateDate()))
                 && (this.getComboOwner() == null ? other.getComboOwner() == null : this.getComboOwner().equals(other.getComboOwner()))
                 && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
                 && (this.getComboStatus() == null ? other.getComboStatus() == null : this.getComboStatus().equals(other.getComboStatus()))
@@ -319,7 +213,6 @@ public class Combo extends AuditDomain {
         result = prime * result + ((getSalesArea() == null) ? 0 : getSalesArea().hashCode());
         result = prime * result + ((getComboStartDate() == null) ? 0 : getComboStartDate().hashCode());
         result = prime * result + ((getComboEndDate() == null) ? 0 : getComboEndDate().hashCode());
-        result = prime * result + ((getLastUpdateDate() == null) ? 0 : getLastUpdateDate().hashCode());
         result = prime * result + ((getComboOwner() == null) ? 0 : getComboOwner().hashCode());
         result = prime * result + ((getRemark() == null) ? 0 : getRemark().hashCode());
         result = prime * result + ((getComboStatus() == null) ? 0 : getComboStatus().hashCode());
@@ -349,5 +242,4 @@ public class Combo extends AuditDomain {
         sb.append("]");
         return sb.toString();
     }
-
 }
