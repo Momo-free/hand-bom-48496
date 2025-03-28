@@ -9,11 +9,15 @@ import springfox.documentation.spring.web.plugins.Docket;
 public class SwaggerTags {
 
     public static final String Menu = "Menu";
+    public static final String Combo = "Combo";
+    public static final String MATERIAL = "material";
 
     @Autowired
     public SwaggerTags(Docket docket) {
         docket.tags(
-                new Tag(Menu, "Menu 案例")
+                new Tag(Menu, "Menu 案例"),
+                new Tag(Combo, "套餐 案例"),
+                new Tag(MATERIAL, "食材 案例")
         );
     }
 }

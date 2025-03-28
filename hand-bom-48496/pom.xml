@@ -9,9 +9,10 @@
         <version>0.0.1</version>
     </parent>
     <groupId>com.hand</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>hzero-demo</artifactId>
     <version>1.0.0-snapshot</version>
-    <name>demo</name>
+    <name>hzero-demo</name>
+
 
     <dependencies>
         <dependency>

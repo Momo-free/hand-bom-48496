@@ -2,19 +2,18 @@ package com.hand.demo.api.controller.v1.dto;
 
 import java.util.Date;
 
+/**
+ * 菜单套餐查询条件DTO
+ */
 public class MenuComboDto {
     private String menuName;
-    private String menuCode;
     private String menuOwner;
+    private Date startDate;
+    private Date endDate;
     private String comboName;
-    private String comboCode;
+    private String comboOwner;
     private String comboType;
     private String salesArea;
-    private Date comboStartDate;
-    private Date comboEndDate;
-    private Date lastUpdateDate;
-    private String comboOwner;
-    private Long tenantId;
 
     public String getMenuName() {
         return menuName;
@@ -22,14 +21,6 @@ public class MenuComboDto {
 
     public void setMenuName(String menuName) {
         this.menuName = menuName;
-    }
-
-    public String getMenuCode() {
-        return menuCode;
-    }
-
-    public void setMenuCode(String menuCode) {
-        this.menuCode = menuCode;
     }
 
     public String getMenuOwner() {
@@ -40,6 +31,22 @@ public class MenuComboDto {
         this.menuOwner = menuOwner;
     }
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
     public String getComboName() {
         return comboName;
     }
@@ -48,12 +55,12 @@ public class MenuComboDto {
         this.comboName = comboName;
     }
 
-    public String getComboCode() {
-        return comboCode;
+    public String getComboOwner() {
+        return comboOwner;
     }
 
-    public void setComboCode(String comboCode) {
-        this.comboCode = comboCode;
+    public void setComboOwner(String comboOwner) {
+        this.comboOwner = comboOwner;
     }
 
     public String getComboType() {
@@ -70,45 +77,5 @@ public class MenuComboDto {
 
     public void setSalesArea(String salesArea) {
         this.salesArea = salesArea;
-    }
-
-    public Date getComboStartDate() {
-        return comboStartDate;
-    }
-
-    public void setComboStartDate(Date comboStartDate) {
-        this.comboStartDate = comboStartDate;
-    }
-
-    public Date getComboEndDate() {
-        return comboEndDate;
-    }
-
-    public void setComboEndDate(Date comboEndDate) {
-        this.comboEndDate = comboEndDate;
-    }
-
-    public Date getLastUpdateDate() {
-        return lastUpdateDate;
-    }
-
-    public void setLastUpdateDate(Date lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
-    }
-
-    public String getComboOwner() {
-        return comboOwner;
-    }
-
-    public void setComboOwner(String comboOwner) {
-        this.comboOwner = comboOwner;
-    }
-
-    public Long getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(Long tenantId) {
-        this.tenantId = tenantId;
     }
 }

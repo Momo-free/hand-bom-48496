@@ -170,7 +170,7 @@ spring:
       - id: hzero_bom_48496_route
         uri: lb://hzero-bom-48496
         predicates:
-          - Path=/combo-bom/**
+          - Path=/hzero-demo/**
         filters:
           - StripPrefix=1
       default-filters:

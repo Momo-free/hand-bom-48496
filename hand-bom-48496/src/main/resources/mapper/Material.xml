@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hand.demo.infra.mapper.MaterialMapper">
+
+    <select id="page" resultType="com.hand.demo.domain.vo.MaterialVo">
+        select
+        material_code as materialCode,
+        material_name as materialName,
+        brand,
+        purchase_type as purchaseType,
+        unit,
+        spec_url as specUrl,
+        eqa_code as eqaCode,
+        special_tda as specialTda,
+        contains_water as containsWater,
+        material_status as materialStatus
+        from material
+        <where>
+            AND tenant_id = #{tenantId}
+            <if test="materialDto.materialCode != null and materialDto.materialCode != ''">
+                AND material_code LIKE CONCAT('%', #{materialDto.materialCode}, '%')
+            </if>
+            <if test="materialDto.materialName != null and materialDto.materialName != ''">
+                AND material_name LIKE CONCAT('%', #{materialDto.materialName}, '%')
+            </if>
+            <if test="materialDto.brand != null and materialDto.brand != ''">
+                AND brand = #{materialDto.brand}
+            </if>
+            <if test="materialDto.purchaseType != null and materialDto.purchaseType != ''">
+                AND purchase_type = #{materialDto.purchaseType}
+            </if>
+            <if test="materialDto.unit != null and materialDto.unit != ''">
+                AND unit = #{materialDto.unit}
+            </if>
+            <if test="materialDto.supplyQa != null and materialDto.supplyQa != ''">
+                AND supply_qa LIKE CONCAT('%', #{materialDto.supplyQa}, '%')
+            </if>
+            <if test="materialDto.eqaCode != null and materialDto.eqaCode != ''">
+                AND eqa_code LIKE CONCAT('%', #{materialDto.eqaCode}, '%')
+            </if>
+            <if test="materialDto.specialTda != null and materialDto.specialTda != ''">
+                AND special_tda = #{materialDto.specialTda}
+            </if>
+            <if test="materialDto.containsWater != null and materialDto.containsWater != ''">
+                AND contains_water = #{materialDto.containsWater}
+            </if>
+            <if test="materialDto.materialStatus != null and materialDto.materialStatus != ''">
+                AND material_status = #{materialDto.materialStatus}
+            </if>
+            <if test="materialDto.applyStatus != null and materialDto.applyStatus != ''">
+                AND apply_status = #{materialDto.applyStatus}
+            </if>
+            <if test="materialDto.jdeCode != null and materialDto.jdeCode != ''">
+                AND jde_code LIKE CONCAT('%', #{materialDto.jdeCode}, '%')
+            </if>
+            <if test="materialDto.createdBy != null and materialDto.createdBy != ''">
+                AND created_by LIKE CONCAT('%', #{materialDto.createdBy}, '%')
+            </if>
+            <if test="materialDto.creationDateFrom != null">
+                AND creation_date >= #{materialDto.creationDateFrom}
+            </if>
+            <if test="materialDto.creationDateTo != null">
+                AND creation_date &lt;= #{materialDto.creationDateTo}
+            </if>
+        </where>
+        ORDER BY creation_date DESC
+    </select>
+</mapper>
